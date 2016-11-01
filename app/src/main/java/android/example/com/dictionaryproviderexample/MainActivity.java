@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.provider.UserDictionary;
 import android.provider.UserDictionary.Words;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.widget.ListView;
 import android.support.v4.widget.SimpleCursorAdapter;
 
@@ -31,12 +32,12 @@ import android.support.v4.widget.SimpleCursorAdapter;
 public class MainActivity extends ActionBarActivity {
 
     // For the SimpleCursorAdapter to match the UserDictionary columns to layout items.
-    private static final String[] COLUMNS_TO_BE_BOUND  = new String[] {
+    private static final String[] COLUMNS_TO_BE_BOUND = new String[]{
             UserDictionary.Words.WORD,
             UserDictionary.Words.FREQUENCY
     };
 
-    private static final int[] LAYOUT_ITEMS_TO_FILL = new int[] {
+    private static final int[] LAYOUT_ITEMS_TO_FILL = new int[]{
             android.R.id.text1,
             android.R.id.text2
     };
@@ -53,7 +54,10 @@ public class MainActivity extends ActionBarActivity {
         ContentResolver resolver = getContentResolver();
 
         // Get a Cursor containing all of the rows in the Words table.
-        Cursor cursor = resolver.query(UserDictionary.Words.CONTENT_URI, null, null, null, null);
+        Cursor cursor = resolver.query(Words.CONTENT_URI, null, null, null, null);
+
+        Log.d("MainActivity", "Words Uri:: " + Words.CONTENT_URI.toString());
+        Log.d("MainActivity", "Words Size:: " + cursor.getCount());
 
         // Set the Adapter to fill the standard two_line_list_item layout with data from the Cursor.
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
